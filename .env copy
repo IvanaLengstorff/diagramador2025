@@ -3,8 +3,8 @@ APP_ENV=local
 APP_KEY=base64:3xXMgAhtFyKYAZdmUiJfu67vvrszDgNrjm7f4gs9lYs=
 APP_DEBUG=true
 APP_TIMEZONE=UTC
-# APP_URL=http://localhost
-APP_URL=https://diagramador-ivana-b7bhdwh9h2ddccem.brazilsouth-01.azurewebsites.net
+APP_URL=http://localhost
+# APP_URL=https://diagramador-ivana-b7bhdwh9h2ddccem.brazilsouth-01.azurewebsites.net
 
 # APP_URL=http://localhost:8000
 
