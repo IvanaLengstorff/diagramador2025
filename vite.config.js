@@ -15,12 +15,12 @@ export default defineConfig({
     optimizeDeps: {
         include: ['jointjs', 'lodash', 'backbone', 'jquery']
     },
-    server: {
-        host: '0.0.0.0',
-        port: 5173,
-        strictPort: true,
-        hmr: {
-            host: 'localhost',
-        },
-    },
+    // server: {
+    //     host: '0.0.0.0',
+    //     port: 5173,
+    //     strictPort: true,
+    //     hmr: {
+    //         host: 'localhost',
+    //     },
+    // },
 });
