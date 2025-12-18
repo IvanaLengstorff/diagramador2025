@@ -16,12 +16,6 @@ RUN apt-get update && apt-get install -y \
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# COPIAR TODO EL PROYECTO ANTES
 COPY . .
 
-# Ahora sí, artisan existe
-RUN composer install --no-interaction --prefer-dist
-
 EXPOSE 8000
-
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
