@@ -1,0 +1,1192 @@
+/* resources/css/uml-editor.css - VERSIÓN ACTUALIZADA CON MÓDULOS DE IA */
+
+/* ==================== FUENTES PROFESIONALES ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ==================== VARIABLES CSS ==================== */
+:root {
+    /* Colores principales */
+    --uml-primary: #1e40af;
+    --uml-secondary: #3b82f6;
+    --uml-accent: #6366f1;
+    --uml-success: #10b981;
+    --uml-warning: #f59e0b;
+    --uml-error: #ef4444;
+
+    /* Colores de fondo */
+    --uml-bg-primary: #ffffff;
+    --uml-bg-secondary: #f8fafc;
+    --uml-bg-canvas: #fdfdfe;
+
+    /* Colores IA */
+    --ai-primary: #6366f1;
+    --ai-secondary: #8b5cf6;
+    --ai-gradient: linear-gradient(45deg, #6366f1, #8b5cf6);
+
+    /* Relaciones */
+    --uml-relation-color: #1e40af;
+    --uml-relation-width: 2px;
+
+    /* Sombras */
+    --uml-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --uml-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --uml-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --uml-shadow-ai: 0 4px 15px rgba(99, 102, 241, 0.3);
+
+    /* Espaciado */
+    --uml-spacing-xs: 4px;
+    --uml-spacing-sm: 8px;
+    --uml-spacing-md: 16px;
+    --uml-spacing-lg: 24px;
+    --uml-spacing-xl: 32px;
+
+    /* Tipografía */
+    --uml-font-mono: 'Fira Code', 'Consolas', 'Monaco', monospace;
+    --uml-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ==================== CANVAS Y CONTENEDOR PRINCIPAL ==================== */
+#paper-container {
+    background: var(--uml-bg-canvas);
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(30, 64, 175, 0.08) 1px, transparent 0);
+    background-size: 20px 20px;
+    border-radius: 12px;
+    box-shadow: var(--uml-shadow-lg);
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+}
+
+#paper-container:active {
+    cursor: grabbing;
+}
+
+/* Estados del cursor según la herramienta */
+#paper-container[data-tool="select"] {
+    cursor: grab;
+}
+
+#paper-container[data-tool="select"]:active {
+    cursor: grabbing;
+}
+
+#paper-container[data-tool="class"],
+#paper-container[data-tool="interface"] {
+    cursor: crosshair;
+}
+
+#paper-container[data-tool="association"],
+#paper-container[data-tool="inheritance"],
+#paper-container[data-tool="aggregation"],
+#paper-container[data-tool="composition"] {
+    cursor: crosshair;
+}
+
+/* ==================== ESTILOS DE IA - BOTÓN FLOTANTE ==================== */
+
+.ai-floating-button-v2 {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--ai-gradient);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: var(--uml-shadow-ai);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    user-select: none;
+    font-family: var(--uml-font-sans);
+}
+
+.ai-floating-button-v2:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.ai-floating-button-v2 .ai-icon {
+    font-size: 16px;
+}
+
+/* ==================== ESTILOS DE IA - MINI PANEL ==================== */
+
+.ai-mini-panel {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 280px;
+    max-height: 350px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+    transform: translateX(320px);
+    transition: transform 0.3s ease;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    font-family: var(--uml-font-sans);
+}
+
+.ai-mini-panel-visible {
+    transform: translateX(0);
+}
+
+.ai-mini-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--ai-gradient);
+    color: white;
+}
+
+.ai-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-header-title {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.ai-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.ai-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.ai-mini-content {
+    padding: 16px;
+}
+
+/* Estados del formulario */
+.ai-context-section {
+    margin-bottom: 16px;
+}
+
+.ai-context-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.ai-context-input-v2 {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 12px;
+    resize: vertical;
+    min-height: 60px;
+    max-height: 100px;
+    transition: border-color 0.2s;
+    font-family: var(--uml-font-sans);
+}
+
+.ai-context-input-v2:focus {
+    outline: none;
+    border-color: var(--ai-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+.ai-char-counter {
+    text-align: right;
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.ai-analyze-btn-v2 {
+    width: 100%;
+    background: var(--ai-gradient);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ai-analyze-btn-v2:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Estado de carga */
+.ai-loading-state {
+    text-align: center;
+}
+
+.ai-loading-icon {
+    font-size: 24px;
+    animation: spin 1s linear infinite;
+}
+
+.ai-loading-text {
+    margin: 8px 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.ai-progress-bar {
+    width: 100%;
+    height: 4px;
+    background: #f3f4f6;
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 12px 0;
+}
+
+.ai-progress-fill {
+    height: 100%;
+    background: var(--ai-gradient);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Estado de resultado */
+.ai-result-summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.ai-changes-control {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.ai-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ai-btn-success {
+    background: var(--uml-success);
+    color: white;
+}
+
+.ai-btn-success:hover {
+    background: #059669;
+}
+
+.ai-btn-danger {
+    background: var(--uml-error);
+    color: white;
+}
+
+.ai-btn-danger:hover {
+    background: #dc2626;
+}
+
+.ai-btn-secondary {
+    width: 100%;
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.ai-btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+/* ==================== ESTILOS DE IA - ANIMACIONES DE ESCANEO ==================== */
+
+.ai-scan-overlay {
+    animation: aiScanOverlayPulse 3s ease-in-out infinite;
+}
+
+@keyframes aiScanOverlayPulse {
+    0%, 100% {
+        background: rgba(99, 102, 241, 0.05);
+    }
+    50% {
+        background: rgba(99, 102, 241, 0.08);
+    }
+}
+
+/* Animaciones para elementos durante escaneo */
+.ai-scanning-element {
+    transition: all 0.3s ease;
+}
+
+.ai-element-active-pulse {
+    animation: aiElementPulse 1.5s ease-in-out infinite;
+}
+
+.ai-element-scanning-now {
+    animation: aiElementHighlight 0.5s ease-in-out;
+    filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.6));
+}
+
+@keyframes aiElementPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
+}
+
+@keyframes aiElementHighlight {
+    0% {
+        filter: drop-shadow(0 0 0px rgba(99, 102, 241, 0));
+    }
+    50% {
+        filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.8));
+    }
+    100% {
+        filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.6));
+    }
+}
+
+/* ==================== ESTILOS DE IA - BURBUJAS MEJORADAS ==================== */
+
+.ai-bubble-container {
+    font-family: var(--uml-font-sans);
+    position: relative;
+    z-index: 200;
+}
+
+/* ✅ BURBUJAS BASE - TAMAÑOS AUMENTADOS */
+.ai-bubble {
+    max-width: 380px;  /* ✅ Aumentado de 240px */
+    min-width: 250px;  /* ✅ Aumentado de 180px */
+    background: white;
+    border-radius: 16px;  /* ✅ Más redondeado */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);  /* ✅ Sombra mejorada */
+    border: 1px solid #e5e7eb;
+    position: relative;
+    z-index: 201;
+    animation: aiBubbleFloat 4s ease-in-out infinite;
+    backdrop-filter: blur(8px);  /* ✅ Efecto glassmorphism */
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ✅ HEADER MEJORADO PARA DRAG & DROP */
+.ai-bubble-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px 6px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: grab;
+    background: linear-gradient(135deg, #fafafa 0%, #f8fafc 100%);
+    border-radius: 16px 16px 0 0;
+    user-select: none;
+}
+
+.ai-bubble-header:active {
+    cursor: grabbing;
+}
+
+.ai-bubble-drag-handle {
+    color: #94a3b8;
+    font-size: 14px;
+    cursor: grab;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.ai-bubble-drag-handle:hover {
+    background: #e2e8f0;
+    color: #64748b;
+    transform: scale(1.1);
+}
+
+/* ✅ CONTENIDO MEJORADO */
+.ai-bubble-content {
+    padding: 16px 18px 18px 18px;  /* ✅ Más espacioso */
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;  /* ✅ Más separación */
+}
+
+.ai-bubble-icon {
+    font-size: 20px;  /* ✅ Íconos más grandes */
+    flex-shrink: 0;
+    margin-top: 1px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.ai-bubble-text {
+    font-size: 14px;  /* ✅ Texto más legible */
+    line-height: 1.6;  /* ✅ Mejor interlineado */
+    color: #374151;
+    flex: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.ai-bubble-text-container {
+    flex: 1;
+    min-width: 0;
+}
+
+.ai-bubble-text-content {
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ✅ BOTÓN "VER MÁS" COMPLETAMENTE REDISEÑADO */
+.ai-bubble-expand-btn {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    border: 1px solid #cbd5e1;
+    color: #4f46e5;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+    font-family: var(--uml-font-sans);
+}
+
+.ai-bubble-expand-btn:hover {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    border-color: #6366f1;
+}
+
+.ai-bubble-expand-btn .expand-icon {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+    font-weight: bold;
+}
+
+.ai-bubble-expand-btn:hover .expand-icon {
+    transform: scale(1.2);
+}
+
+/* ✅ ESTADO EXPANDIDO MEJORADO */
+.ai-bubble-expanded {
+    max-width: 480px;  /* ✅ Mucho más ancho al expandir */
+    min-width: 400px;
+    transform: scale(1.01);
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.15);
+    z-index: 205;
+}
+
+.ai-bubble-expanded .ai-bubble-text {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+/* ✅ SCROLLBAR PERSONALIZADA PARA CONTENIDO EXPANDIDO */
+.ai-bubble-expanded .ai-bubble-text::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ai-bubble-expanded .ai-bubble-text::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+.ai-bubble-expanded .ai-bubble-text::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.ai-bubble-expanded .ai-bubble-text::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ✅ BOTÓN CERRAR MEJORADO */
+.ai-bubble-close {
+    background: rgba(239, 68, 68, 0.1);
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 16px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.ai-bubble-close:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Flecha de la burbuja mejorada */
+.ai-bubble-arrow {
+    position: absolute;
+    left: 20px;
+    bottom: -9px;
+    width: 0;
+    height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 9px solid white;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* ✅ TIPOS DE BURBUJAS CON GRADIENTES MEJORADOS */
+.ai-bubble-info {
+    border-left: 5px solid #3b82f6;  /* ✅ Bordes más gruesos */
+    background: linear-gradient(135deg, #fff 0%, #eff6ff 100%);
+}
+
+.ai-bubble-suggestion {
+    border-left: 5px solid #f59e0b;
+    background: linear-gradient(135deg, #fff 0%, #fffbeb 100%);
+}
+
+.ai-bubble-warning {
+    border-left: 5px solid #ef4444;
+    background: linear-gradient(135deg, #fff 0%, #fef2f2 100%);
+}
+
+.ai-bubble-error {
+    border-left: 5px solid #dc2626;
+    background: linear-gradient(135deg, #fff 0%, #fef2f2 100%);
+    border-color: #fecaca;
+}
+
+.ai-bubble-success {
+    border-left: 5px solid #10b981;
+    background: linear-gradient(135deg, #fff 0%, #ecfdf5 100%);
+}
+
+.ai-bubble-change {
+    border-left: 5px solid #8b5cf6;
+    background: linear-gradient(135deg, #fff 0%, #faf5ff 100%);
+}
+
+/* ✅ ESTADO DESTACADO MEJORADO */
+.ai-bubble-highlighted {
+    animation: aiBubbleHighlight 0.8s ease-in-out;
+    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.4);
+}
+
+/* ✅ ANIMACIONES MEJORADAS */
+@keyframes aiBubbleFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes aiBubbleHighlight {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+    }
+}
+
+/* ✅ EFECTOS HOVER MEJORADOS */
+.ai-bubble:hover {
+    transform: translateY(-2px);  /* ✅ Más movimiento */
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+.ai-bubble:hover .ai-bubble-arrow {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+/* Indicador de burbuja nueva mejorado */
+.ai-bubble-new {
+    animation: aiBubbleEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes aiBubbleEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(25px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ✅ CLASES PARA ESTADO ARRASTRABLE */
+.ai-bubble-draggable {
+    cursor: move;
+    user-select: none;
+}
+
+.ai-bubble-draggable:active {
+    cursor: grabbing;
+    transform: scale(1.02);
+}
+
+/* ✅ RESPONSIVE MEJORADO */
+@media (max-width: 768px) {
+    .ai-bubble {
+        max-width: 300px;  /* ✅ Optimizado para móvil */
+        min-width: 200px;
+    }
+
+    .ai-bubble-expanded {
+        max-width: 320px;
+        min-width: 280px;
+    }
+
+    .ai-bubble-text {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .ai-bubble-content {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+
+    .ai-bubble-icon {
+        font-size: 18px;
+    }
+
+    .ai-bubble-expand-btn {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ai-bubble {
+        max-width: 260px;
+        min-width: 180px;
+    }
+
+    .ai-bubble-expanded {
+        max-width: 280px;
+        min-width: 240px;
+    }
+
+    .ai-bubble-content {
+        padding: 10px 12px;
+    }
+}
+
+/* ✅ ESTADOS DE CARGA Y TRANSICIONES */
+.ai-bubble-loading {
+    opacity: 0.7;
+    animation: aiBubblePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes aiBubblePulse {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ✅ MEJORAS DE ACCESIBILIDAD */
+.ai-bubble:focus-within {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+}
+
+.ai-bubble-expand-btn:focus {
+    outline: 2px solid #6366f1;
+    outline-offset: 1px;
+}
+
+.ai-bubble-close:focus {
+    outline: 2px solid #ef4444;
+    outline-offset: 1px;
+}
+
+/* ✅ EFECTOS DE PROFUNDIDAD */
+.ai-bubble::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 100%);
+    border-radius: 16px;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+/* ✅ ANIMACIÓN SUAVE PARA CAMBIOS DE TAMAÑO */
+.ai-bubble-text-content {
+    transition: all 0.3s ease;
+}
+
+/* ✅ INDICADORES VISUALES ADICIONALES */
+.ai-bubble-priority-high {
+    border-left-width: 6px !important;
+    box-shadow: 0 8px 32px rgba(239, 68, 68, 0.15);
+}
+
+.ai-bubble-priority-medium {
+    border-left-width: 4px !important;
+}
+
+.ai-bubble-priority-low {
+    border-left-width: 3px !important;
+    opacity: 0.9;
+}
+
+/* ==================== ESTILOS DE IA - PREVIEW DE CAMBIOS ==================== */
+
+.ai-change-overlay {
+    font-family: var(--uml-font-sans);
+}
+
+.ai-change-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.ai-change-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.ai-change-btn {
+    flex: 1;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ai-change-accept {
+    background: var(--uml-success);
+    color: white;
+}
+
+.ai-change-accept:hover {
+    background: #059669;
+}
+
+.ai-change-reject {
+    background: var(--uml-error);
+    color: white;
+}
+
+.ai-change-reject:hover {
+    background: #dc2626;
+}
+
+.ai-preview-global-controls {
+    font-family: var(--uml-font-sans);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 180px;
+}
+
+.ai-preview-summary {
+    text-align: center;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.ai-preview-count {
+    font-weight: 600;
+    color: var(--ai-secondary);
+}
+
+.ai-preview-accept-all,
+.ai-preview-reject-all {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ai-preview-accept-all {
+    background: var(--uml-success);
+    color: white;
+}
+
+.ai-preview-accept-all:hover {
+    background: #059669;
+}
+
+.ai-preview-reject-all {
+    background: var(--uml-error);
+    color: white;
+}
+
+.ai-preview-reject-all:hover {
+    background: #dc2626;
+}
+
+/* Highlights para atributos y métodos */
+.ai-attribute-highlight,
+.ai-method-highlight {
+    font-family: var(--uml-font-mono);
+}
+
+.ai-new-attribute {
+    color: #92400e;
+}
+
+.ai-new-method {
+    color: #6b21a8;
+}
+
+/* ==================== ANIMACIONES GENERALES ==================== */
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==================== TOOLBAR ORIGINAL (MANTENER) ==================== */
+
+.toolbar-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: var(--uml-shadow-lg);
+    border: 1px solid rgba(229, 231, 235, 0.8);
+    display: flex;
+    gap: var(--uml-spacing-xs);
+    padding: var(--uml-spacing-sm);
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.tool-btn {
+    background: rgba(248, 250, 252, 0.8);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: var(--uml-spacing-sm) 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #374151;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 80px;
+    justify-content: center;
+}
+
+.tool-btn:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: var(--uml-primary);
+    transform: translateY(-1px);
+}
+
+.tool-btn.active {
+    background: var(--uml-primary);
+    color: white;
+    border-color: var(--uml-primary);
+    box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
+}
+
+/* ==================== CONTROLES DE ZOOM ==================== */
+
+.zoom-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: var(--uml-spacing-xs);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    box-shadow: var(--uml-shadow-md);
+    border: 1px solid rgba(229, 231, 235, 0.8);
+    z-index: 100;
+}
+
+.zoom-btn {
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #374151;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+}
+
+.zoom-btn:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--uml-primary);
+}
+
+.zoom-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ==================== INFO DEL CANVAS ==================== */
+
+#canvas-info {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    box-shadow: var(--uml-shadow-md);
+    border: 1px solid rgba(229, 231, 235, 0.8);
+    padding: var(--uml-spacing-sm) var(--uml-spacing-md);
+    font-size: 12px;
+    color: #6b7280;
+    z-index: 100;
+    font-family: var(--uml-font-mono);
+}
+
+/* ==================== ELEMENTOS UML MEJORADOS ==================== */
+
+.joint-element {
+    transition: all 0.2s ease;
+}
+
+.joint-element:hover {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.joint-element text {
+    font-family: var(--uml-font-mono);
+    font-size: 11px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+.joint-link {
+    transition: all 0.2s ease;
+}
+
+.joint-link:hover {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+    .toolbar-container {
+        flex-wrap: wrap;
+        max-width: calc(100vw - 40px);
+    }
+
+    .tool-btn {
+        min-width: 70px;
+        font-size: 12px;
+    }
+
+    .ai-floating-button-v2 {
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .ai-mini-panel {
+        width: 260px;
+        bottom: 70px;
+        right: 15px;
+    }
+
+    .ai-bubble {
+        max-width: 200px;
+        min-width: 160px;
+    }
+
+    .ai-bubble-text {
+        font-size: 12px;
+    }
+
+    #canvas-info {
+        font-size: 10px;
+        padding: var(--uml-spacing-xs) var(--uml-spacing-sm);
+    }
+
+    .zoom-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+}
+
+/* ==================== TEMA OSCURO (OPCIONAL) ==================== */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --uml-bg-primary: #1f2937;
+        --uml-bg-secondary: #111827;
+        --uml-bg-canvas: #1a1f2e;
+    }
+
+    #paper-container {
+        background-color: #1a1f2e;
+        background-image:
+            radial-gradient(circle at 1px 1px, rgba(96, 165, 250, 0.1) 1px, transparent 0);
+    }
+
+    .joint-element text {
+        fill: #e5e7eb !important;
+    }
+
+    .joint-element rect {
+        fill: #374151 !important;
+        stroke: #60a5fa !important;
+    }
+
+    .toolbar-container {
+        background: rgba(31, 41, 55, 0.95);
+        border-color: rgba(96, 165, 250, 0.2);
+    }
+
+    .tool-btn {
+        background: rgba(55, 65, 81, 0.8);
+        color: #e5e7eb;
+    }
+
+    .tool-btn:hover {
+        background: rgba(96, 165, 250, 0.1);
+        border-color: rgba(96, 165, 250, 0.3);
+    }
+
+    #canvas-info {
+        background: rgba(31, 41, 55, 0.95);
+        color: #e5e7eb;
+        border-color: rgba(96, 165, 250, 0.2);
+    }
+
+    .ai-mini-panel {
+        background: #1f2937;
+        border-color: rgba(96, 165, 250, 0.2);
+    }
+
+    .ai-bubble {
+        background: #374151;
+        border-color: rgba(96, 165, 250, 0.2);
+    }
+
+    .ai-bubble-text {
+        color: #e5e7eb;
+    }
+}
+
+/* ==================== LIMPIAR ESTILOS ANTIGUOS ==================== */
+
+.class-box,
+.uml-class-overlay,
+.editable,
+.delete-btn,
+.class-header,
+.class-attributes,
+.class-methods {
+    display: none !important;
+}
+
+/* Asegurar calidad del texto */
+.joint-viewport {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==================== PRINT STYLES ==================== */
+@media print {
+    .toolbar-container,
+    .zoom-controls,
+    #canvas-info,
+    .ai-floating-button-v2,
+    .ai-mini-panel,
+    .ai-bubble,
+    .ai-change-overlay {
+        display: none !important;
+    }
+
+    #paper-container {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+
+    .joint-element,
+    .joint-link {
+        print-color-adjust: exact !important;
+    }
+}
