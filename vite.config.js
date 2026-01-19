@@ -26,8 +26,8 @@ export default defineConfig({
         strictPort: false,
         hmr: {
             host: '98.83.42.61',
-            port: 5173,
-            protocol: 'http',
+            port: 443,
+            protocol: 'https',
         },
     },
 });
