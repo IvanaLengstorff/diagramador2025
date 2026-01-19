@@ -3,10 +3,7 @@ APP_ENV=local
 APP_KEY=base64:3xXMgAhtFyKYAZdmUiJfu67vvrszDgNrjm7f4gs9lYs=
 APP_DEBUG=true
 APP_TIMEZONE=UTC
-APP_URL=http://localhost
-# APP_URL=https://diagramador-ivana-b7bhdwh9h2ddccem.brazilsouth-01.azurewebsites.net
-
-# APP_URL=http://localhost:8000
+APP_URL=http://98.83.42.61:8000
 
 
 APP_LOCALE=en
@@ -69,6 +66,11 @@ AWS_BUCKET=
 AWS_USE_PATH_STYLE_ENDPOINT=false
 
 VITE_APP_NAME="${APP_NAME}"
+
+# =============== VITE HMR CONFIGURATION ===============
+VITE_HMR_HOST=98.83.42.61
+VITE_HMR_PORT=5173
+VITE_HMR_PROTOCOL=http
 
 # Pusher Configuration
 PUSHER_APP_ID=2053366
