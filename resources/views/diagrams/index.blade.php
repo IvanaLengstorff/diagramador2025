@@ -1,31 +1,31 @@
 {{-- resources/views/diagrams/index.blade.php --}}
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 {{ __('Mis Diagramas UML') }}
             </h2>
             <a href="{{ route('diagrams.editor') }}"
-               class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+               class="px-4 py-2 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
                 ➕ Nuevo Diagrama
             </a>
         </div>
     </x-slot>
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
 
             {{-- Estadísticas rápidas --}}
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-4">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <span class="text-blue-600 font-semibold">📊</span>
+                                <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full">
+                                    <span class="font-semibold text-blue-600">📊</span>
                                 </div>
                             </div>
-                            <div class="ml-5 w-0 flex-1">
+                            <div class="flex-1 w-0 ml-5">
                                 <dl>
                                     <dt class="text-sm font-medium text-gray-500 truncate">Total</dt>
                                     <dd class="text-lg font-medium text-gray-900">{{ $stats['total'] }}</dd>
@@ -35,15 +35,15 @@
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                                    <span class="text-green-600 font-semibold">🔒</span>
+                                <div class="flex items-center justify-center w-8 h-8 bg-green-100 rounded-full">
+                                    <span class="font-semibold text-green-600">🔒</span>
                                 </div>
                             </div>
-                            <div class="ml-5 w-0 flex-1">
+                            <div class="flex-1 w-0 ml-5">
                                 <dl>
                                     <dt class="text-sm font-medium text-gray-500 truncate">Privados</dt>
                                     <dd class="text-lg font-medium text-gray-900">{{ $stats['private'] }}</dd>
@@ -53,15 +53,15 @@
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                                    <span class="text-purple-600 font-semibold">🤝</span>
+                                <div class="flex items-center justify-center w-8 h-8 bg-purple-100 rounded-full">
+                                    <span class="font-semibold text-purple-600">🤝</span>
                                 </div>
                             </div>
-                            <div class="ml-5 w-0 flex-1">
+                            <div class="flex-1 w-0 ml-5">
                                 <dl>
                                     <dt class="text-sm font-medium text-gray-500 truncate">Compartidos</dt>
                                     <dd class="text-lg font-medium text-gray-900">{{ $stats['shared'] }}</dd>
@@ -71,15 +71,15 @@
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-                                    <span class="text-orange-600 font-semibold">📝</span>
+                                <div class="flex items-center justify-center w-8 h-8 bg-orange-100 rounded-full">
+                                    <span class="font-semibold text-orange-600">📝</span>
                                 </div>
                             </div>
-                            <div class="ml-5 w-0 flex-1">
+                            <div class="flex-1 w-0 ml-5">
                                 <dl>
                                     <dt class="text-sm font-medium text-gray-500 truncate">Templates</dt>
                                     <dd class="text-lg font-medium text-gray-900">{{ $stats['templates'] }}</dd>
@@ -91,7 +91,7 @@
             </div>
 
             {{-- Filtros y búsqueda --}}
-            <div class="bg-white shadow-sm sm:rounded-lg mb-6">
+            <div class="mb-6 bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <form method="GET" action="{{ route('diagrams.index') }}" class="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:space-x-4">
                         <div class="flex-1">
@@ -117,17 +117,17 @@
                                    id="templates"
                                    value="1"
                                    {{ $filters['is_template'] ? 'checked' : '' }}
-                                   class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                   class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                             <label for="templates" class="ml-2 text-sm text-gray-700">Solo templates</label>
                         </div>
 
                         <div class="flex space-x-2">
                             <button type="submit"
-                                    class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                                    class="px-4 py-2 text-sm font-medium text-white transition-colors bg-gray-600 rounded-md hover:bg-gray-700">
                                 🔍 Filtrar
                             </button>
                             <a href="{{ route('diagrams.index') }}"
-                               class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                               class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-300 rounded-md hover:bg-gray-400">
                                 ✖️ Limpiar
                             </a>
                         </div>
@@ -137,9 +137,9 @@
 
             {{-- Lista de diagramas --}}
             @if($diagrams->count() > 0)
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     @foreach($diagrams as $diagram)
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-md transition-shadow">
+                        <div class="overflow-hidden transition-shadow bg-white shadow-sm sm:rounded-lg hover:shadow-md">
                             <div class="p-6">
                                 {{-- Header del diagrama --}}
                                 <div class="flex items-start justify-between mb-4">
@@ -155,23 +155,23 @@
                                     </div>
 
                                     {{-- Indicador de visibilidad --}}
-                                    <div class="ml-4 flex-shrink-0">
+                                    <div class="flex-shrink-0 ml-4">
                                         @if($diagram->visibility === 'private')
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                            <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-800 bg-gray-100 rounded-full">
                                                 🔒 Privado
                                             </span>
                                         @elseif($diagram->visibility === 'shared')
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                            <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-blue-800 bg-blue-100 rounded-full">
                                                 🤝 Compartido
                                             </span>
                                         @elseif($diagram->visibility === 'public')
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">
                                                 🌍 Público
                                             </span>
                                         @endif
 
                                         @if($diagram->is_template)
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 ml-2">
+                                            <span class="inline-flex items-center px-2 py-1 ml-2 text-xs font-medium text-orange-800 bg-orange-100 rounded-full">
                                                 📝 Template
                                             </span>
                                         @endif
@@ -179,23 +179,23 @@
                                 </div>
 
                                 {{-- Estadísticas del diagrama --}}
-                                <div class="flex items-center text-sm text-gray-500 space-x-4 mb-4">
+                                <div class="flex items-center mb-4 space-x-4 text-sm text-gray-500">
                                     <span class="flex items-center">
-                                        <span class="w-2 h-2 bg-blue-500 rounded-full mr-1"></span>
+                                        <span class="w-2 h-2 mr-1 bg-blue-500 rounded-full"></span>
                                         {{ $diagram->elements_count }} elementos
                                     </span>
                                     <span class="flex items-center">
-                                        <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
+                                        <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
                                         {{ $diagram->classes_count }} clases
                                     </span>
                                     <span class="flex items-center">
-                                        <span class="w-2 h-2 bg-purple-500 rounded-full mr-1"></span>
+                                        <span class="w-2 h-2 mr-1 bg-purple-500 rounded-full"></span>
                                         v{{ $diagram->version }}
                                     </span>
                                 </div>
 
                                 {{-- Fechas --}}
-                                <div class="text-xs text-gray-400 mb-4">
+                                <div class="mb-4 text-xs text-gray-400">
                                     <div>Creado: {{ $diagram->created_at->format('d/m/Y H:i') }}</div>
                                     @if($diagram->last_saved_at)
                                         <div>Guardado: {{ $diagram->last_saved_at->diffForHumans() }}</div>
@@ -205,19 +205,19 @@
                                 {{-- Botones de acción --}}
                                 <div class="flex flex-wrap gap-2">
                                     <a href="{{ route('diagrams.editor', $diagram->id) }}"
-                                       class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors">
+                                       class="px-3 py-1 text-sm font-medium text-white transition-colors bg-blue-600 rounded hover:bg-blue-700">
                                         ✏️ Editar
                                     </a>
 
-                                    <a href="{{ route('diagrams.show', $diagram->id) }}"
-                                       class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors">
+                                    {{-- <a href="{{ route('diagrams.show', $diagram->id) }}"
+                                       class="px-3 py-1 text-sm font-medium text-white transition-colors bg-gray-600 rounded hover:bg-gray-700">
                                         👁️ Ver
-                                    </a>
+                                    </a> --}}
 
                                     <form method="POST" action="{{ route('diagrams.duplicate', $diagram->id) }}" class="inline">
                                         @csrf
                                         <button type="submit"
-                                                class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors">
+                                                class="px-3 py-1 text-sm font-medium text-white transition-colors bg-green-600 rounded hover:bg-green-700">
                                             📋 Clonar
                                         </button>
                                     </form>
@@ -229,7 +229,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                    class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors">
+                                                    class="px-3 py-1 text-sm font-medium text-white transition-colors bg-red-600 rounded hover:bg-red-700">
                                                 🗑️ Eliminar
                                             </button>
                                         </form>
@@ -248,15 +248,15 @@
                 {{-- Estado vacío --}}
                 <div class="bg-white shadow-sm sm:rounded-lg">
                     <div class="p-12 text-center">
-                        <div class="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                        <div class="flex items-center justify-center w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full">
                             <span class="text-4xl text-gray-400">📊</span>
                         </div>
 
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">No tienes diagramas aún</h3>
-                        <p class="text-gray-600 mb-6">Comienza creando tu primer diagrama de clases UML</p>
+                        <h3 class="mb-2 text-lg font-medium text-gray-900">No tienes diagramas aún</h3>
+                        <p class="mb-6 text-gray-600">Comienza creando tu primer diagrama de clases UML</p>
 
                         <a href="{{ route('diagrams.editor') }}"
-                           class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors inline-flex items-center">
+                           class="inline-flex items-center px-6 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
                             ➕ Crear mi primer diagrama
                         </a>
                     </div>
@@ -267,7 +267,7 @@
 
     {{-- Notificaciones --}}
     @if (session('success'))
-        <div class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+        <div class="fixed z-50 px-6 py-3 text-white bg-green-500 rounded-lg shadow-lg bottom-4 right-4"
              x-data="{ show: true }"
              x-show="show"
              x-init="setTimeout(() => show = false, 4000)"
