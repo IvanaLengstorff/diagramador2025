@@ -19,15 +19,23 @@ export default defineConfig({
         outDir: 'public/build',
         emptyOutDir: true,
         manifest: true,
+        rollupOptions: {
+            output: {
+                manualChunks: {}
+            }
+        }
     },
     server: {
         host: '0.0.0.0',
         port: 5173,
         strictPort: false,
+        fs: {
+            strict: false,
+        },
         hmr: process.env.VITE_HMR_HOST ? {
             host: process.env.VITE_HMR_HOST,
-            port: process.env.VITE_HMR_PORT || 443,
-            protocol: process.env.VITE_HMR_PROTOCOL || 'https',
-        } : true,
+            port: 443,
+            protocol: 'https',
+        } : undefined,
     },
 });
