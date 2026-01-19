@@ -3,7 +3,7 @@ APP_ENV=local
 APP_KEY=base64:3xXMgAhtFyKYAZdmUiJfu67vvrszDgNrjm7f4gs9lYs=
 APP_DEBUG=true
 APP_TIMEZONE=UTC
-APP_URL=http://98.83.42.61:8000
+APP_URL=https://98.83.42.61
 
 
 APP_LOCALE=en
