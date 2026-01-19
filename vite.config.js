@@ -15,14 +15,19 @@ export default defineConfig({
     optimizeDeps: {
         include: ['jointjs', 'lodash', 'backbone', 'jquery']
     },
+    build: {
+        outDir: 'public/build',
+        emptyOutDir: true,
+        manifest: true,
+    },
     server: {
         host: '0.0.0.0',
         port: 5173,
         strictPort: false,
-        hmr: {
-            host: process.env.VITE_HMR_HOST || 'localhost',
-            port: process.env.VITE_HMR_PORT || 5173,
-            protocol: process.env.VITE_HMR_PROTOCOL || 'http',
-        },
+        hmr: process.env.VITE_HMR_HOST ? {
+            host: process.env.VITE_HMR_HOST,
+            port: process.env.VITE_HMR_PORT || 443,
+            protocol: process.env.VITE_HMR_PROTOCOL || 'https',
+        } : true,
     },
 });
