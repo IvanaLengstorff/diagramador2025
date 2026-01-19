@@ -25,9 +25,9 @@ export default defineConfig({
         port: 5173,
         middlewareMode: false,
         hmr: {
-            host: process.env.VITE_HMR_HOST || 'localhost',
-            port: process.env.VITE_HMR_PORT || 5173,
-            protocol: process.env.VITE_HMR_PROTOCOL || 'http',
+            host: '98.83.42.61',
+            port: 443,
+            protocol: 'https',
         },
     },
 });
