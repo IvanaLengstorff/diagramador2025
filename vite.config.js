@@ -23,11 +23,11 @@ export default defineConfig({
     server: {
         host: '0.0.0.0',
         port: 5173,
-        strictPort: false,
-        hmr: process.env.VITE_HMR_HOST ? {
-            host: process.env.VITE_HMR_HOST,
-            port: process.env.VITE_HMR_PORT || 443,
-            protocol: process.env.VITE_HMR_PROTOCOL || 'https',
-        } : true,
+        middlewareMode: false,
+        hmr: {
+            host: process.env.VITE_HMR_HOST || 'localhost',
+            port: process.env.VITE_HMR_PORT || 5173,
+            protocol: process.env.VITE_HMR_PROTOCOL || 'http',
+        },
     },
 });
