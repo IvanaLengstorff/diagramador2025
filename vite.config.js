@@ -23,11 +23,11 @@ export default defineConfig({
     server: {
         host: '0.0.0.0',
         port: 5173,
-        middlewareMode: false,
+        strictPort: false,
         hmr: {
             host: '98.83.42.61',
-            port: 443,
-            protocol: 'https',
+            port: 5173,
+            protocol: 'http',
         },
     },
 });
