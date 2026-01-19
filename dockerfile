@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo pdo_mysql mbstring bcmath gd \
     && rm -rf /var/lib/apt/lists/*
 
+RUN git config --global --add safe.directory /usr/src/app
+
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
